@@ -1,0 +1,65 @@
+<head>
+    {% extends 'base.html' %}
+    {% load static %}
+    {% block title %}AstroEvents | {{profile}}{% endblock title %}   
+</head>
+{% block content %}
+{% include 'events/navigationBar.html' %}
+<div class="ui link cards" id="profileParentDiv">
+    <div class="card" id="profileCard">
+        <div class="image">
+            <img src={{profile.profilePicture.url}}>
+        </div>
+        <div class="content">
+            <div class="header">{{profile.firstName}}  {{profile.lastName}} </div>
+            <div class="meta"><a>{{profile.email}}</a></div>
+        </div>
+
+        <div class="extra content">
+            <button class="ui basic button" onclick="profileEdit()">
+                <i class="icon user"></i>Edit Profile
+            </button>
+        </div>
+    </div>
+
+    <div id="profileEvents">
+        {% for event in profileEvents %}
+        <div class="ui card" id="profileEventsCard">
+            <div class="image"><img src={{event.poster.url}}></div>
+    
+            <div class="content">
+    
+              <a class="header">{{event.title}}</a>
+              <div class="meta"><span class="date">{{event.venue}}</span></div>
+              <div class="description">{{event.description}}</div>
+             
+                <a class="item" href="{% url 'home:eventDetail' event.id %}">
+                    <button class="ui right labeled icon button" id="eventDetailBtn">
+                    <i class="add icon"></i>
+                    Details
+                    </button>
+                </a>
+
+                <a class="item" href="{% url 'home:eventEdit' event.id %}">
+                    <button class="ui right labeled icon button" id="eventDetailBtn">
+                        <i class="edit icon"></i>
+                        Edit
+                    </button>
+                </a>
+            </div>
+            
+            <div class="extra content"><a><i class="user icon"></i>{{event.size}} Attendees</a></div>
+            <div class="extra content"><a><i class="dollar sign icon"></i>{{event.price}}</a></div>
+            
+          </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock content %}
+{% block scripts %}
+<script type="text/javascript">
+    function profileEdit(){ window.location.href = "{% url 'profiles:editProfile' %}"; }
+</script>
+{% endblock scripts %}
+
