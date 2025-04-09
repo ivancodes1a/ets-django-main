@@ -13,22 +13,25 @@ from django.contrib.auth.decorators import login_required
 def homeView(request):
     profile = Profile.objects.get(user=request.user)
     form    = EventCreationForm(request.POST or None, request.FILES or None)
-    events  = Event.objects.all()
+
     if request.method == 'POST':
         if form.is_valid():
             event = form.save(commit=False)
-            event.organizer = profile  
+            event.organizer = profile
             event.save()
-            event.attendees.add(profile)  
+            event.attendees.add(profile)
 
-            # Set a flag in the session to indicate a successful event creation
+            # Indicate event was created successfully
             request.session['eventCreated'] = True
 
+            return redirect('home:home')  # Replace with your home URL name
+
+    events   = Event.objects.all()
     template = loader.get_template('events/home.html')
     context  = {
         "profile": profile,
-        'form'   : form,
-        'events' : events,
+        'form': EventCreationForm(),  # fresh form after redirect
+        'events': events,
     }
     return HttpResponse(template.render(context, request))
 
@@ -39,7 +42,7 @@ def eventDetailView(request, id):
     event   = Event.objects.get(pk=id)
 
     profileEmail   = profile.email 
-    senderEmail    = "2004668@students.kcau.ac.ke"
+    senderEmail    = "2104984@students.kcau.ac.ke"
     eventName      = event.title
     uuid           = generateUUID(profileEmail)
     profileSubject = f'Your UID for {eventName}'

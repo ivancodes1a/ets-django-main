@@ -3,17 +3,37 @@
     border-bottom: 1px solid #B0BEC5;
 }
 
+#navbarHeader{
+    display: flex;
+    flex: 1;
+    margin: 0px; 
+    height: 100%;
+    align-items: center;
+    padding: 0px 5% 0px 0px;
+    justify-content: flex-end; 
+}
+
 #homeMainDiv{
     display: flex;
-    width: 80%;
-    padding-top: 20px;
+    gap: 30px;
+    width: 90%;
+    margin: 0px;
+    padding: 0px;
     flex-direction: column;
 }
 
 #homeEventChildDiv{
     display: flex;
-    flex-direction: row;
+    gap: 15px;
+    margin: 0px;
+    padding: 0px;
     align-items: center;
+    justify-content: flex-end; 
+}
+
+#homeEventEmpty{ 
+    height: fit-content; 
+    margin: 20px 0px 0px 0px;
 }
 
 #homeEventMessage{ 
@@ -22,20 +42,37 @@
 }
 
 #homeCreateBtn{ 
+    margin: 0px;
     height: 40px;
-    width: 150px; 
-    margin-right: 20px;
+    width: 150px;  
+    padding: 0px;
 }
 
-#homeEventDiv{
-    margin-top: 30px;
-    height: 70vh;
+#homeEventDiv{ 
+    display: grid; 
+    margin: 0px;
+    height: 68vh; 
+    row-gap: 10px; 
+    column-gap: 4%;
     overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0px 10px 10px 10px;
+    grid-template-columns: 30% 30% 30%;
+    grid-template-rows: 100% 100% 100%;  
 }
 
-#homeEventCard{
-    width: 60%;
-    margin-bottom: 30px;
+#homeEventPosterImage{ 
+    width: 100% !important;
+    min-width: 26.5vw;
+    max-height: 29vh;
+}
+
+#homeEventCard{ 
+    display: flex; 
+    width: 100%;
+    padding: 0px 0px 10px 0px;
+    align-items: flex-start !important; 
+    justify-content: flex-start !important;
 }
 
 #homeeventCreateForm{ margin: 10px; }
