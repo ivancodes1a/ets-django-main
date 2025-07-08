@@ -1,0 +1,18 @@
+<head>
+  {% load static %}
+</head>
+{% block content %}
+<div class="ui secondary pointing menu" id="navbarMainDiv"> 
+  <a class="item" href="{% url 'events:home' %}"><b>Home</b></a>
+  <a class="item" href="{% url 'profiles:profile' %}" ><b>{{profile.user}}</b></a>
+  <a class="item" href="{% url 'login' %}"><b>Log Out</b></a>
+  <h2 class="ui header" id='navbarHeader'>Tikiti Poa</h2>
+</div>
+{% endblock content %}
+{% block scripts %}
+<script type="text/javascript">
+ksh('.item').click(function() {
+  ksh('.item').eq(1).click();
+});
+</script>
+{% endblock scripts %}
