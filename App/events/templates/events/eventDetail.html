@@ -1,0 +1,92 @@
+<head>
+  {% extends 'base.html' %}
+  {% load static %}
+  {% block title %}AstroEvents : {{event.id}}{% endblock title %}
+</head>
+{% block content %}
+{% include 'events/navigationBar.html' %}
+<div id="eventDetailsParent">
+
+  <div class="ui card" id="eventDetailsParentCard">
+    <div class="image"><img src={{event.poster.url}}></div>
+
+    <div class="content">
+
+      <a class="header">{{event.title}}</a>
+      <div class="meta"><span class="date">{{event.venue}}</span></div>
+      <div class="description">{{event.description}}</div>
+     
+      {% if event.attendees.count <= event.size %}
+        <button class="ui secondary button" type="submit" id="eventDetailsBookBtn">Book Now</button>
+      {% endif %}
+    </div>
+    
+    <div class="extra content"><a><i class="user icon"></i>{{event.size}} Attendees</a></div>
+    <div class="extra content"><a><i class="dollar sign icon"></i>{{event.price}}</a></div>
+    
+  </div>
+
+  <div class="ui success message" id="eventDetailsMessage">
+    <div class="header">Succcess !</div>
+    <p>Event Succcessfully Booked</p>
+  </div>
+
+</div>
+
+<div class="ui modal">
+  <div class="header">Book Event</div>
+
+  <form action="" method="POST" id="eventDetailForm" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <p>Thank you for choosing to book our event!</P>
+    <p> Your reservation is almost complete. To finalize your booking, we'll send you a unique 9-character UID (Unique Identifier) via email.</P>
+    <p>This UID is important and will help us identify your reservation.</P>
+
+    <div class="actions">
+      <div class="ui black deny button">Cancel</div>
+      <button class="ui secondary button" type="submit">Book</button>
+    </div>
+  </form>
+</div>
+{% endblock content %}
+{% block scripts %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#eventDetailsBookBtn').click(function() {
+      $('.ui.modal').modal('show');
+    });
+  });
+
+  // Handle form submission via AJAX
+  $('#eventDetailForm').submit(function(e) {
+
+    e.preventDefault(); 
+    var formData = $(this).serialize();
+
+    $.ajax({
+      type: 'POST',
+      url : "{% url 'home:eventDetail' event.id %}",
+      data: formData,
+      success: function(response) {
+
+        console.log('Form submitted successfully', response);
+
+        $('#eventDetailsMessage').show();
+        setTimeout(function() { $('#eventDetailsMessage').fadeOut('slow'); }, 5000);
+
+      },
+      error: function(error) { console.error('Error submitting form', error);  }
+      
+    });
+
+    // Close the modal
+    $('.ui.modal').modal('hide');
+  });
+
+</script>
+{% endblock scripts %}
+
+
+
+
